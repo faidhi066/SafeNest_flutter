@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../constants/constants.dart';
 import '../../../constants/functions.dart';
-import '../../../model/category_transaction.dart';
 import '../../../providers/categories_provider.dart';
 import '../../custom_widgets/default_card.dart';
+import '../../models/category_transaction.dart';
 
 class CategoryList extends ConsumerStatefulWidget {
   const CategoryList({super.key});
@@ -40,7 +40,8 @@ class _CategoryListState extends ConsumerState<CategoryList> with Functions {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
               child: Row(
                 children: [
                   Container(
@@ -52,7 +53,7 @@ class _CategoryListState extends ConsumerState<CategoryList> with Functions {
                     child: Icon(
                       Icons.list_alt,
                       size: 24.0,
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                   ),
                   const SizedBox(width: 12.0),
@@ -71,14 +72,17 @@ class _CategoryListState extends ConsumerState<CategoryList> with Functions {
                 itemCount: categorys.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                separatorBuilder: (context, index) => const SizedBox(height: 16),
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 16),
                 itemBuilder: (context, i) {
                   CategoryTransaction category = categorys[i];
                   IconData? icon = iconList[category.symbol];
                   Color? color = categoryColorListTheme[category.color];
                   return DefaultCard(
                     onTap: () {
-                      ref.read(categoriesProvider.notifier).selectedCategory(category);
+                      ref
+                          .read(categoriesProvider.notifier)
+                          .selectedCategory(category);
                       Navigator.of(context).pushNamed('/add-category');
                     },
                     child: Row(
@@ -93,7 +97,7 @@ class _CategoryListState extends ConsumerState<CategoryList> with Functions {
                               ? Icon(
                                   icon,
                                   size: 30.0,
-                                  color: Theme.of(context).colorScheme.background,
+                                  color: Theme.of(context).colorScheme.surface,
                                 )
                               : const SizedBox(),
                         ),
@@ -103,7 +107,8 @@ class _CategoryListState extends ConsumerState<CategoryList> with Functions {
                           style: Theme.of(context)
                               .textTheme
                               .titleLarge!
-                              .copyWith(color: Theme.of(context).colorScheme.primary),
+                              .copyWith(
+                                  color: Theme.of(context).colorScheme.primary),
                         ),
                       ],
                     ),

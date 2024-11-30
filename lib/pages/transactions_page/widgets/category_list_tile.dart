@@ -4,11 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/functions.dart';
 import '../../../constants/style.dart';
-import '../../../model/category_transaction.dart';
-import '../../../model/transaction.dart';
+import '../../../models/category_transaction.dart';
+import '../../../models/transaction.dart';
 import '../../../providers/categories_provider.dart';
 import '../../../providers/currency_provider.dart';
-import 'categories_tab.dart';
 
 class CategoryListTile extends ConsumerWidget {
   const CategoryListTile({
@@ -78,7 +77,10 @@ class CategoryListTile extends ConsumerWidget {
                           ),
                           Text(
                             "${amount.toStringAsFixed(2)} ${currencyState.selectedCurrency.symbol}",
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: (amount > 0) ? green : red),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(color: (amount > 0) ? green : red),
                           ),
                         ],
                       ),
@@ -100,7 +102,9 @@ class CategoryListTile extends ConsumerWidget {
                 ),
                 const SizedBox(width: 8.0),
                 Icon(
-                  (selectedCategoryIndex == index) ? Icons.expand_more : Icons.chevron_right,
+                  (selectedCategoryIndex == index)
+                      ? Icons.expand_more
+                      : Icons.chevron_right,
                 ),
               ],
             ),
@@ -166,10 +170,8 @@ class TransactionRow extends ConsumerWidget with Functions {
                     ),
                     Text(
                       "${numToCurrency(transaction.amount)} ${currencyState.selectedCurrency.symbol}",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.copyWith(color: (transaction.amount > 0) ? green : red),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: (transaction.amount > 0) ? green : red),
                     ),
                   ],
                 ),
@@ -210,7 +212,8 @@ class ExpandedSection extends StatefulWidget {
   State<ExpandedSection> createState() => _ExpandedSectionState();
 }
 
-class _ExpandedSectionState extends State<ExpandedSection> with SingleTickerProviderStateMixin {
+class _ExpandedSectionState extends State<ExpandedSection>
+    with SingleTickerProviderStateMixin {
   late AnimationController expandController;
   late Animation<double> animation;
 

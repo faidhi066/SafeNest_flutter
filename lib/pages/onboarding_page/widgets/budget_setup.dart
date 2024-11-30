@@ -1,21 +1,19 @@
-import 'dart:ui';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/constants/constants.dart';
 import '/constants/style.dart';
-import '/model/budget.dart';
 import '/pages/onboarding_page/widgets/account_setup.dart';
 import '/pages/onboarding_page/widgets/add_budget.dart';
 import '/providers/budgets_provider.dart';
 import '/providers/categories_provider.dart';
+import '../../../models/budget.dart';
 import 'add_category_button.dart';
 import 'category_button.dart';
 
 class BudgetSetup extends ConsumerStatefulWidget {
-  const BudgetSetup({Key? key}) : super(key: key);
+  const BudgetSetup({super.key});
 
   @override
   ConsumerState<BudgetSetup> createState() => _BudgetSetupState();
@@ -31,7 +29,8 @@ class _BudgetSetupState extends ConsumerState<BudgetSetup> {
   Widget build(BuildContext context) {
     budgetsList = ref.watch(budgetsProvider).value;
     totalBudget = budgetsList?.fold<num>(
-            0, (total, budget) => total + budget.amountLimit) ?? 0;
+            0, (total, budget) => total + budget.amountLimit) ??
+        0;
     final categoriesGrid = ref.watch(categoriesProvider);
     return Scaffold(
       backgroundColor: blue7,
@@ -71,7 +70,8 @@ class _BudgetSetupState extends ConsumerState<BudgetSetup> {
                     data: (categories) => GridView.builder(
                       itemCount: categories.length + 1,
                       scrollDirection: Axis.vertical,
-                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 300,
                         childAspectRatio: 3,
                         crossAxisSpacing: 18,
@@ -80,19 +80,22 @@ class _BudgetSetupState extends ConsumerState<BudgetSetup> {
                       itemBuilder: (context, i) {
                         if (i < categories.length) {
                           return GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) =>
-                                    AddBudget(categories.elementAt(i)),
-                              );
-                            },
-                            child: CategoryButton(
-                              categoryColor: categoryColorList[categories.elementAt(i).color],
-                              categoryName: categories.elementAt(i).name,
-                              budget: budgetsList?.firstWhereOrNull((budget) => budget.idCategory == categories.elementAt(i).id),
-                            )
-                          );
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      AddBudget(categories.elementAt(i)),
+                                );
+                              },
+                              child: CategoryButton(
+                                categoryColor: categoryColorList[
+                                    categories.elementAt(i).color],
+                                categoryName: categories.elementAt(i).name,
+                                budget: budgetsList?.firstWhereOrNull(
+                                    (budget) =>
+                                        budget.idCategory ==
+                                        categories.elementAt(i).id),
+                              ));
                         } else {
                           return GestureDetector(
                             onTap: () => Navigator.of(context)
@@ -215,5 +218,3 @@ class _BudgetSetupState extends ConsumerState<BudgetSetup> {
     );
   }
 }
-
-

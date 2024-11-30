@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../model/transaction.dart';
+
 import '../../../constants/functions.dart';
+import '../../../models/transaction.dart';
 import '../../../providers/transactions_provider.dart';
 
 class RecurrenceSelector extends ConsumerStatefulWidget {
@@ -11,7 +12,8 @@ class RecurrenceSelector extends ConsumerStatefulWidget {
   ConsumerState<RecurrenceSelector> createState() => _RecurrenceSelectorState();
 }
 
-class _RecurrenceSelectorState extends ConsumerState<RecurrenceSelector> with Functions {
+class _RecurrenceSelectorState extends ConsumerState<RecurrenceSelector>
+    with Functions {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +35,8 @@ class _RecurrenceSelectorState extends ConsumerState<RecurrenceSelector> with Fu
             });
             return Material(
               child: InkWell(
-                onTap: () => ref.read(intervalProvider.notifier).state = recurrence.keys.first,
+                onTap: () => ref.read(intervalProvider.notifier).state =
+                    recurrence.keys.first,
                 child: ListTile(
                   contentPadding: const EdgeInsets.fromLTRB(32, 20, 20, 20),
                   title: Text(
@@ -44,7 +47,8 @@ class _RecurrenceSelectorState extends ConsumerState<RecurrenceSelector> with Fu
                         .copyWith(color: Theme.of(context).colorScheme.primary),
                   ),
                   trailing: ref.watch(intervalProvider) == recurrence.keys.first
-                      ? Icon(Icons.done, color: Theme.of(context).colorScheme.secondary)
+                      ? Icon(Icons.done,
+                          color: Theme.of(context).colorScheme.secondary)
                       : null,
                 ),
               ),

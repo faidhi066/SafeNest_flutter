@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants/style.dart';
-import '../../../model/currency.dart';
+import '../../../models/currency.dart';
 import '../../../providers/currency_provider.dart';
 
 class CurrencySelectorDialog {
@@ -48,7 +48,7 @@ class CurrencySelectorDialog {
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .background,
+                                                    .surface,
                                                 fontSize: 20)),
                                       ),
                                       title: Text(

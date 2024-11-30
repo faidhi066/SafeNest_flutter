@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/transactions_provider.dart';
-import 'graphs_page/graphs_page.dart';
+import 'chatbot_page/chatbot_page.dart';
 import 'home_page.dart';
-import 'planning_page/planning_page.dart';
+// import 'graphs_page/graphs_page.dart';
+import 'stress_test_page/stress_test_page.dart';
 import 'transactions_page/transactions_page.dart';
 
 final StateProvider selectedIndexProvider = StateProvider<int>((ref) => 0);
@@ -21,18 +22,18 @@ class Structure extends ConsumerStatefulWidget {
 class _StructureState extends ConsumerState<Structure> {
   // We could add this List in the app's state, so it isn't intialized every time.
   final List<String> _pagesTitle = [
-    "Dashboard",
-    "Transactions",
+    "Hi Izzy!",
+    "Trends & Insights",
     "",
-    "Planning",
-    "Graphs",
+    "Chatbot",
+    "Stress Test",
   ];
   final List<Widget> _pages = [
     const HomePage(),
     const TransactionsPage(),
     const SizedBox(),
-    const PlanningPage(),
-    const GraphsPage(),
+    const ChatbotPage(),
+    const StressTestPage(),
   ];
 
   @override
@@ -42,25 +43,25 @@ class _StructureState extends ConsumerState<Structure> {
       // Prevent the fab moving up when the keyboard is opened
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor:
-            selectedIndex == 0 ? Theme.of(context).colorScheme.tertiary : Theme.of(context).colorScheme.background,
+        backgroundColor: selectedIndex == 0
+            ? Theme.of(context).colorScheme.tertiary
+            : Theme.of(context).colorScheme.surface,
         title: Text(
           _pagesTitle.elementAt(selectedIndex),
         ),
         leading: Padding(
           padding: const EdgeInsets.only(left: 16),
           child: ElevatedButton(
-            onPressed: () => Navigator.of(context).pushNamed('/search'),
+            onPressed: () => Navigator.of(context).pushNamed('/settings'),
             style: ElevatedButton.styleFrom(
               elevation: 0,
               shape: const CircleBorder(),
-              padding: const EdgeInsets.all(8),
-              backgroundColor: Theme.of(context).colorScheme.primary,
+              padding: const EdgeInsets.all(0),
+              // backgroundColor: Theme.of(context).colorScheme.primary,
             ),
-            child: Icon(
-              Icons.search,
-              color: Theme.of(context).colorScheme.background,
-            ),
+            child: Image.asset("assets/avatar.png"
+                // color: Theme.of(context).colorScheme.surface,
+                ),
           ),
         ),
         actions: [
@@ -75,8 +76,8 @@ class _StructureState extends ConsumerState<Structure> {
                 backgroundColor: Theme.of(context).colorScheme.primary,
               ),
               child: Icon(
-                Icons.settings,
-                color: Theme.of(context).colorScheme.background,
+                Icons.notifications,
+                color: Theme.of(context).colorScheme.surface,
               ),
             ),
           ),
@@ -90,24 +91,31 @@ class _StructureState extends ConsumerState<Structure> {
         selectedFontSize: 8,
         unselectedFontSize: 8,
         currentIndex: selectedIndex,
-        onTap: (index) => index != 2 ? ref.read(selectedIndexProvider.notifier).state = index : null,
+        onTap: (index) => index != 2
+            ? ref.read(selectedIndexProvider.notifier).state = index
+            : null,
         items: [
           BottomNavigationBarItem(
             icon: Icon(selectedIndex == 0 ? Icons.home : Icons.home_outlined),
-            label: "DASHBOARD",
+            label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(selectedIndex == 1 ? Icons.swap_horizontal_circle : Icons.swap_horizontal_circle_outlined),
-            label: "TRANSACTIONS",
+            icon: Icon(selectedIndex == 1
+                ? Icons.bar_chart
+                : Icons.bar_chart_outlined),
+            label: "Trends",
           ),
           const BottomNavigationBarItem(icon: Text(""), label: ""),
           BottomNavigationBarItem(
-            icon: Icon(selectedIndex == 3 ? Icons.calendar_today : Icons.calendar_today_outlined),
-            label: "PLANNING",
+            icon: Icon(selectedIndex == 3
+                ? Icons.assistant
+                : Icons.assistant_outlined),
+            label: "Chatbot",
           ),
           BottomNavigationBarItem(
-            icon: Icon(selectedIndex == 4 ? Icons.data_exploration : Icons.data_exploration_outlined),
-            label: "GRAPHS",
+            icon: Icon(
+                selectedIndex == 4 ? Icons.science : Icons.science_outlined),
+            label: "Stress Test",
           ),
         ],
       ),
@@ -118,14 +126,15 @@ class _StructureState extends ConsumerState<Structure> {
         child: Icon(
           Icons.add_rounded,
           size: 55,
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.surface,
         ),
         onPressed: () {
           ref.read(transactionsProvider.notifier).reset();
           Navigator.of(context).pushNamed("/add-page");
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
     );
   }
 }

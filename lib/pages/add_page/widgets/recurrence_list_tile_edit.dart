@@ -6,8 +6,8 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 
 import '../../../constants/functions.dart';
 import "../../../constants/style.dart";
+import '../../../models/transaction.dart';
 import '../../../providers/transactions_provider.dart';
-import '../../../model/transaction.dart';
 import 'recurrence_selector.dart';
 
 class RecurrenceListTileEdit extends ConsumerWidget with Functions {
@@ -35,7 +35,7 @@ class RecurrenceListTileEdit extends ConsumerWidget with Functions {
               child: Icon(
                 Icons.autorenew,
                 size: 24.0,
-                color: Theme.of(context).colorScheme.background,
+                color: Theme.of(context).colorScheme.surface,
               ),
             ),
           ),
@@ -52,7 +52,7 @@ class RecurrenceListTileEdit extends ConsumerWidget with Functions {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.background,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 padding: const EdgeInsets.all(16),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4)),
@@ -93,7 +93,7 @@ class RecurrenceListTileEdit extends ConsumerWidget with Functions {
             padding: const EdgeInsets.all(16),
             child: TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.background,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 padding: const EdgeInsets.all(16),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4)),
@@ -166,7 +166,9 @@ class EndDateSelector extends ConsumerWidget with Functions {
                 trailing: ref.watch(endDateProvider) != null
                     ? const Icon(Icons.check)
                     : null,
-                    subtitle: Text(ref.read(endDateProvider) != null ? dateToString(ref.read(endDateProvider.notifier).state!) : ''),
+                subtitle: Text(ref.read(endDateProvider) != null
+                    ? dateToString(ref.read(endDateProvider.notifier).state!)
+                    : ''),
                 onTap: () async {
                   FocusManager.instance.primaryFocus?.unfocus();
                   if (Platform.isIOS) {

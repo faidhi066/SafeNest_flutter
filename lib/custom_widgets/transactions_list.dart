@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../constants/constants.dart';
 import '../constants/functions.dart';
 import '../constants/style.dart';
-import '../model/transaction.dart';
+import '../models/transaction.dart';
+import '../pages/trends_page/widget/bar_graph.dart';
 import '../providers/currency_provider.dart';
 import '../providers/transactions_provider.dart';
 import '../utils/date_helper.dart';
@@ -91,14 +92,16 @@ class _TransactionsListState extends State<TransactionsList> with Functions {
               ),
             ),
           )
-        : Container(
-            padding: const EdgeInsets.all(16),
-            margin: const EdgeInsets.all(16),
-            width: double.infinity,
-            child: const Center(
-              child: Text("No transactions available"),
-            ),
-          );
+        :
+        // Container(
+        //     padding: const EdgeInsets.all(16),
+        //     margin: const EdgeInsets.all(16),
+        //     width: double.infinity,
+        //     child: const Center(
+        //       child: Text("No transactions available"),
+        //     ),
+        //   );
+        const BarChartWidget();
   }
 }
 
@@ -172,7 +175,7 @@ class TransactionRow extends ConsumerWidget with Functions {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currencyState = ref.watch(currencyStateNotifier);
-    
+
     return Column(
       children: [
         Material(
@@ -186,11 +189,10 @@ class TransactionRow extends ConsumerWidget with Functions {
               ref
                   .read(transactionsProvider.notifier)
                   .transactionUpdateState(transaction)
-                  .whenComplete(
-                      () => Navigator.of(context).pushNamed(
-                          "/add-page",
-                          arguments: {'recurrencyEditingPermitted': !transaction.recurring}
-                      ));
+                  .whenComplete(() => Navigator.of(context)
+                          .pushNamed("/add-page", arguments: {
+                        'recurrencyEditingPermitted': !transaction.recurring
+                      }));
             },
             borderRadius: BorderRadius.vertical(
               top: first ? const Radius.circular(8) : Radius.zero,
@@ -227,8 +229,11 @@ class TransactionRow extends ConsumerWidget with Functions {
                         const SizedBox(height: 11),
                         Row(
                           children: [
-                            if (transaction.recurring) // Check if the transaction is recurring
-                              const Icon(Icons.repeat, color: Colors.blueAccent), // Add an icon for recurring transactions
+                            if (transaction
+                                .recurring) // Check if the transaction is recurring
+                              const Icon(Icons.repeat,
+                                  color: Colors
+                                      .blueAccent), // Add an icon for recurring transactions
                             if (transaction.note != null)
                               Text(
                                 transaction.note!,
@@ -308,7 +313,7 @@ class TransactionRow extends ConsumerWidget with Functions {
         ),
         if (!last)
           Container(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
             child: Divider(
               height: 1,
               indent: 12,

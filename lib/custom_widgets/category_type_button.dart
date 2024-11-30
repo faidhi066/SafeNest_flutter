@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../constants/style.dart';
-import '../model/category_transaction.dart';
+import '../models/category_transaction.dart';
 import '../providers/categories_provider.dart';
 import '../providers/transactions_provider.dart';
 
@@ -19,7 +20,10 @@ class CategoryTypeButton extends ConsumerWidget {
     );
 
     TextStyle textStyleFromType(CategoryTransactionType type) =>
-        Theme.of(context).textTheme.bodyLarge!.copyWith(color: categoryType == type ? white : blue2);
+        Theme.of(context)
+            .textTheme
+            .bodyLarge!
+            .copyWith(color: categoryType == type ? white : blue2);
 
     void onTap(CategoryTransactionType type) {
       ref.invalidate(totalAmountProvider);
@@ -36,7 +40,8 @@ class CategoryTypeButton extends ConsumerWidget {
       child: Stack(
         children: [
           AnimatedAlign(
-            alignment: Alignment((categoryType == CategoryTransactionType.income) ? -1 : 1, 0),
+            alignment: Alignment(
+                (categoryType == CategoryTransactionType.income) ? -1 : 1, 0),
             curve: Curves.decelerate,
             duration: const Duration(milliseconds: 180),
             child: Container(
@@ -53,7 +58,8 @@ class CategoryTypeButton extends ConsumerWidget {
                 width: width,
                 color: Colors.transparent,
                 alignment: Alignment.center,
-                child: Text("Income", style: textStyleFromType(CategoryTransactionType.income)),
+                child: Text("Income",
+                    style: textStyleFromType(CategoryTransactionType.income)),
               ),
             ),
           ),
@@ -65,7 +71,8 @@ class CategoryTypeButton extends ConsumerWidget {
                 width: width,
                 color: Colors.transparent,
                 alignment: Alignment.center,
-                child: Text('Expenses', style: textStyleFromType(CategoryTransactionType.expense)),
+                child: Text('Expenses',
+                    style: textStyleFromType(CategoryTransactionType.expense)),
               ),
             ),
           ),

@@ -7,6 +7,7 @@ import 'pages/accounts/add_account.dart';
 import 'pages/add_page/add_page.dart';
 import 'pages/categories/add_category.dart';
 import 'pages/categories/category_list.dart';
+import 'pages/chatbot_page/chatbot_page.dart';
 import 'pages/general_options/general_settings.dart';
 import 'pages/graphs_page/graphs_page.dart';
 import 'pages/home_page.dart';
@@ -15,12 +16,11 @@ import 'pages/more_info_page/more_info.dart';
 import 'pages/more_info_page/privacy_policy.dart';
 import 'pages/notifications/notifications_settings.dart';
 import 'pages/onboarding_page/onboarding_page.dart';
-import 'pages/planning_page/planning_page.dart';
 import 'pages/search_page/search_page.dart';
 import 'pages/settings_page.dart';
+import 'pages/stress_test_page/stress_test_page.dart';
 import 'pages/structure.dart';
 import 'pages/transactions_page/transactions_page.dart';
-import 'pages/planning_page/widget/edit_recurring_transaction.dart';
 
 Route<dynamic> makeRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -34,10 +34,11 @@ Route<dynamic> makeRoute(RouteSettings settings) {
       final args = settings.arguments as Map<String, dynamic>?;
       return _materialPageRoute(
         settings.name,
-        AddPage(recurrencyEditingPermitted: args?['recurrencyEditingPermitted'] ?? true),
+        AddPage(
+            recurrencyEditingPermitted:
+                args?['recurrencyEditingPermitted'] ?? true),
       );
-    case '/edit-recurring-transaction':
-      return _materialPageRoute(settings.name, const EditRecurringTransaction());
+
     case '/transactions':
       return _materialPageRoute(settings.name, const TransactionsPage());
     case '/category-list':
@@ -56,8 +57,10 @@ Route<dynamic> makeRoute(RouteSettings settings) {
       return _cupertinoPageRoute(settings.name, const AccountList());
     case '/add-account':
       return _cupertinoPageRoute(settings.name, const AddAccount());
-    case '/planning':
-      return _materialPageRoute(settings.name, const PlanningPage());
+    // case '/planning':
+    //   return _materialPageRoute(settings.name, const PlanningPage());
+    case '/chatbot':
+      return _materialPageRoute(settings.name, const ChatbotPage());
     case '/graphs':
       return _materialPageRoute(settings.name, const GraphsPage());
     case '/settings':
@@ -68,6 +71,8 @@ Route<dynamic> makeRoute(RouteSettings settings) {
       return _cupertinoPageRoute(settings.name, const NotificationsSettings());
     case '/search':
       return _materialPageRoute(settings.name, const SearchPage());
+    case '/stress_test_page':
+      return _materialPageRoute(settings.name, const StressTestPage());
     default:
       throw 'Route is not defined';
   }

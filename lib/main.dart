@@ -6,7 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
-import 'model/recurring_transaction.dart';
+import 'models/recurring_transaction.dart';
 import 'pages/notifications/notifications_service.dart';
 import 'providers/theme_provider.dart';
 import 'routes.dart';
@@ -58,7 +58,7 @@ class Launcher extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appThemeState = ref.watch(appThemeStateNotifier);
     return MaterialApp(
-      title: 'GPTFinance',
+      title: 'SafeNest',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode:

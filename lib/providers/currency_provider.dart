@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../model/currency.dart';
+import '../models/currency.dart';
 
 final currencyStateNotifier = ChangeNotifierProvider(
   (ref) => CurrencyState(),
@@ -10,12 +10,11 @@ final currencyStateNotifier = ChangeNotifierProvider(
 class CurrencyState extends ChangeNotifier {
   //Initial currency selected
   Currency selectedCurrency = const Currency(
-    id: 2,
-    symbol: '\$',
-    code: 'USD',
-    name: "United States Dollar",
-    mainCurrency: true
-  );
+      id: 2,
+      symbol: '\$',
+      code: 'USD',
+      name: "United States Dollar",
+      mainCurrency: true);
 
   CurrencyState() {
     _initializeState();
@@ -27,10 +26,23 @@ class CurrencyState extends ChangeNotifier {
   }
 
   void insertAll() {
-    Currency euro = const Currency(symbol: "€", code: "EUR", name: "Euro", mainCurrency: true);
-    Currency dollar = const Currency(symbol: "\$", code: "USD", name: "United States Dollar", mainCurrency: false);
-    Currency franc = const Currency(symbol: "CHF", code: "CHF", name: "Switzerland Franc", mainCurrency: false);
-    Currency pound = const Currency(symbol: "£", code: "GBP", name: "United Kingdom Pound", mainCurrency: false);
+    Currency euro = const Currency(
+        symbol: "€", code: "EUR", name: "Euro", mainCurrency: true);
+    Currency dollar = const Currency(
+        symbol: "\$",
+        code: "USD",
+        name: "United States Dollar",
+        mainCurrency: false);
+    Currency franc = const Currency(
+        symbol: "CHF",
+        code: "CHF",
+        name: "Switzerland Franc",
+        mainCurrency: false);
+    Currency pound = const Currency(
+        symbol: "£",
+        code: "GBP",
+        name: "United Kingdom Pound",
+        mainCurrency: false);
 
     List<Currency> list = [euro, dollar, franc, pound];
     CurrencyMethods().insertAll(list);
@@ -38,8 +50,8 @@ class CurrencyState extends ChangeNotifier {
   }
 
   void setSelectedCurrency(Currency currency) {
-      selectedCurrency = currency;
-      CurrencyMethods().changeMainCurrency(currency.id!);
-      notifyListeners();
+    selectedCurrency = currency;
+    CurrencyMethods().changeMainCurrency(currency.id!);
+    notifyListeners();
   }
 }

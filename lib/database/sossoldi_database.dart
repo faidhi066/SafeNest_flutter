@@ -4,12 +4,12 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 // Models
-import '../model/bank_account.dart';
-import '../model/budget.dart';
-import '../model/category_transaction.dart';
-import '../model/currency.dart';
-import '../model/recurring_transaction.dart';
-import '../model/transaction.dart';
+import '../models/bank_account.dart';
+import '../models/budget.dart';
+import '../models/category_transaction.dart';
+import '../models/currency.dart';
+import '../models/recurring_transaction.dart';
+import '../models/transaction.dart';
 
 class SossoldiDatabase {
   static final SossoldiDatabase instance = SossoldiDatabase._init();
@@ -240,7 +240,7 @@ class SossoldiDatabase {
       var randomAccount = accounts[rnd.nextInt(accounts.length)];
       var randomNote = outNotes[rnd.nextInt(outNotes.length)];
       var randomCategory = categories[rnd.nextInt(categories.length)];
-      var idBankAccountTransfer;
+      int idBankAccountTransfer = 0;
       DateTime randomDate = now.subtract(Duration(
           days: rnd.nextInt(dateInPastMaxRange),
           hours: rnd.nextInt(20),

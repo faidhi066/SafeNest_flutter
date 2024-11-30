@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../constants/functions.dart';
 import '../../constants/style.dart';
-import '../../model/transaction.dart';
+import '../../models/transaction.dart';
 import '../../providers/transactions_provider.dart';
 import "widgets/account_selector.dart";
 import 'widgets/amount_section.dart';
@@ -49,7 +49,9 @@ class _AddPageState extends ConsumerState<AddPage> with Functions {
 
     if (recurrencyEditingPermittedFromRoute == null) {
       final argsMap = args as Map<String, dynamic>?;
-      recurrencyEditingPermittedFromRoute = argsMap?['recurrencyEditingPermitted'] ?? widget.recurrencyEditingPermitted;
+      recurrencyEditingPermittedFromRoute =
+          argsMap?['recurrencyEditingPermitted'] ??
+              widget.recurrencyEditingPermitted;
     }
   }
 
@@ -101,26 +103,30 @@ class _AddPageState extends ConsumerState<AddPage> with Functions {
       if (selectedTransaction != null) {
         // if the original transaction is not recurrent, but user sets a recurrency, add the corrispondent record
         // and edit the original transaction
-        if(ref.read(selectedRecurringPayProvider) && !selectedTransaction.recurring) {
+        if (ref.read(selectedRecurringPayProvider) &&
+            !selectedTransaction.recurring) {
           ref
               .read(transactionsProvider.notifier)
-              .addRecurringTransaction(currencyToNum(cleanAmount), noteController.text)
+              .addRecurringTransaction(
+                  currencyToNum(cleanAmount), noteController.text)
               .then((value) {
-                if (value != null) {
-                  ref
-                      .read(transactionsProvider.notifier)
-                      .updateTransaction(currencyToNum(cleanAmount), noteController.text, value.id)
-                      .whenComplete(() => Navigator.of(context).pop());
-                }
-              });
+            if (value != null) {
+              ref
+                  .read(transactionsProvider.notifier)
+                  .updateTransaction(
+                      currencyToNum(cleanAmount), noteController.text, value.id)
+                  .whenComplete(() => Navigator.of(context).pop());
+            }
+          });
         } else {
           ref
               .read(transactionsProvider.notifier)
-              .updateTransaction(currencyToNum(cleanAmount), noteController.text, selectedTransaction.idRecurringTransaction)
+              .updateTransaction(
+                  currencyToNum(cleanAmount),
+                  noteController.text,
+                  selectedTransaction.idRecurringTransaction)
               .whenComplete(() => Navigator.of(context).pop());
         }
-
-
       } else {
         if (selectedType == TransactionType.transfer) {
           if (ref.read(bankAccountTransferProvider) != null) {
@@ -132,16 +138,18 @@ class _AddPageState extends ConsumerState<AddPage> with Functions {
         } else {
           // It's an income or an expense
           if (ref.read(categoryProvider) != null) {
-            if(ref.read(selectedRecurringPayProvider)) {
+            if (ref.read(selectedRecurringPayProvider)) {
               ref
-                .read(transactionsProvider.notifier)
-                .addRecurringTransaction(currencyToNum(cleanAmount), noteController.text)
-                .whenComplete(() => Navigator.of(context).pop());
+                  .read(transactionsProvider.notifier)
+                  .addRecurringTransaction(
+                      currencyToNum(cleanAmount), noteController.text)
+                  .whenComplete(() => Navigator.of(context).pop());
             } else {
               ref
-                .read(transactionsProvider.notifier)
-                .addTransaction(currencyToNum(cleanAmount), noteController.text)
-                .whenComplete(() => Navigator.of(context).pop());
+                  .read(transactionsProvider.notifier)
+                  .addTransaction(
+                      currencyToNum(cleanAmount), noteController.text)
+                  .whenComplete(() => Navigator.of(context).pop());
             }
           }
         }
@@ -159,14 +167,17 @@ class _AddPageState extends ConsumerState<AddPage> with Functions {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          (selectedTransaction != null) ? "Editing transaction" : "New transaction",
+          (selectedTransaction != null)
+              ? "Editing transaction"
+              : "New transaction",
         ),
         leadingWidth: 100,
         leading: TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(
             'Cancel',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(color: blue5),
+            style:
+                Theme.of(context).textTheme.titleMedium!.copyWith(color: blue5),
           ),
         ),
         actions: [
@@ -293,8 +304,9 @@ class _AddPageState extends ConsumerState<AddPage> with Functions {
                                   minimumYear: 2015,
                                   maximumYear: 2050,
                                   mode: CupertinoDatePickerMode.date,
-                                  onDateTimeChanged: (date) =>
-                                      ref.read(dateProvider.notifier).state = date,
+                                  onDateTimeChanged: (date) => ref
+                                      .read(dateProvider.notifier)
+                                      .state = date,
                                 ),
                               ),
                             );
@@ -306,16 +318,18 @@ class _AddPageState extends ConsumerState<AddPage> with Functions {
                               lastDate: DateTime(2050),
                             );
                             if (pickedDate != null) {
-                              ref.read(dateProvider.notifier).state = pickedDate;
+                              ref.read(dateProvider.notifier).state =
+                                  pickedDate;
                             }
                           }
                         },
                       ),
                       if (selectedType == TransactionType.expense) ...[
                         RecurrenceListTile(
-                            recurrencyEditingPermitted: widget.recurrencyEditingPermitted,
-                            selectedTransaction: ref.read(selectedTransactionUpdateProvider)
-                        )
+                            recurrencyEditingPermitted:
+                                widget.recurrencyEditingPermitted,
+                            selectedTransaction:
+                                ref.read(selectedTransactionUpdateProvider))
                       ],
                     ],
                   ),
@@ -349,14 +363,17 @@ class _AddPageState extends ConsumerState<AddPage> with Functions {
                   onPressed: _createOrUpdateTransaction,
                   style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.secondary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
                   ),
                   child: Text(
-                    selectedTransaction != null ? "UPDATE TRANSACTION" : "ADD TRANSACTION",
+                    selectedTransaction != null
+                        ? "UPDATE TRANSACTION"
+                        : "ADD TRANSACTION",
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
-                        .copyWith(color: Theme.of(context).colorScheme.background),
+                        .copyWith(color: Theme.of(context).colorScheme.surface),
                   ),
                 ),
               ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../providers/currency_provider.dart';
 
 import '../../../../constants/style.dart';
-import '../../../../model/category_transaction.dart';
+import '../../../../models/category_transaction.dart';
+import '../../../../providers/currency_provider.dart';
 
 class CategoryLabel extends ConsumerWidget {
   const CategoryLabel({
@@ -31,8 +31,10 @@ class CategoryLabel extends ConsumerWidget {
         RichText(
           text: TextSpan(children: [
             TextSpan(
-              text: "${amount.toStringAsFixed(2)}${currencyState.selectedCurrency.symbol}    ",
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: blue1),
+              text:
+                  "${amount.toStringAsFixed(2)}${currencyState.selectedCurrency.symbol}    ",
+              style:
+                  Theme.of(context).textTheme.bodySmall?.copyWith(color: blue1),
             ),
             TextSpan(
               text: "${((amount / total) * 100).abs().toStringAsFixed(2)}%",

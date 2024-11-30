@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/functions.dart';
 import '../../../constants/style.dart';
-import '../../../model/category_transaction.dart';
+import '../../../models/category_transaction.dart';
 import '../../../providers/categories_provider.dart';
 import '../../../providers/transactions_provider.dart';
 
@@ -156,8 +156,7 @@ class _CategorySelectorState extends ConsumerState<CategorySelector>
                               ? Icon(
                                   icon,
                                   size: 24.0,
-                                  color:
-                                      Theme.of(context).colorScheme.background,
+                                  color: Theme.of(context).colorScheme.surface,
                                 )
                               : const SizedBox(),
                         ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../custom_widgets/category_type_button.dart';
 import '../../../../custom_widgets/default_container.dart';
-import '../../../../model/category_transaction.dart';
+import '../../../../models/category_transaction.dart';
 import '../../../../providers/categories_provider.dart';
 import '../../../transactions_page/widgets/month_selector.dart';
 import '../card_label.dart';
@@ -25,7 +26,8 @@ class CategoriesCardState extends ConsumerState<CategoriesCard> {
   Widget build(BuildContext context) {
     final categoryType = ref.watch(categoryTypeProvider);
     final categoryMap = ref.watch(categoryMapProvider(categoryType));
-    final categoryTotalAmount = ref.watch(categoryTotalAmountProvider(categoryType)).value ?? 0;
+    final categoryTotalAmount =
+        ref.watch(categoryTotalAmountProvider(categoryType)).value ?? 0;
 
     return Column(
       children: [
@@ -43,7 +45,8 @@ class CategoriesCardState extends ConsumerState<CategoriesCard> {
                     )
                   : const NoTransactionsContent();
             },
-            loading: () => LoadingContentWidget(previousCategoriesCount: _categoriesCount),
+            loading: () =>
+                LoadingContentWidget(previousCategoriesCount: _categoriesCount),
             error: (e, s) => Text("Error: $e"),
           ),
         ),
@@ -151,7 +154,9 @@ class LoadingContentWidget extends StatelessWidget {
         const SizedBox(height: 20),
         const SizedBox(height: 200), // height of CategoriesPieChart2
         const SizedBox(height: 20),
-        SizedBox(height: 50.0 * previousCategoriesCount), // Height of CategoryItem's list
+        SizedBox(
+            height: 50.0 *
+                previousCategoriesCount), // Height of CategoryItem's list
         const SizedBox(height: 30),
         const SizedBox(height: 200), // Height of CategoriesBarChart
       ],
