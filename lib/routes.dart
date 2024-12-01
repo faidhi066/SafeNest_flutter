@@ -18,7 +18,12 @@ import 'pages/notifications/notifications_settings.dart';
 import 'pages/onboarding_page/onboarding_page.dart';
 import 'pages/search_page/search_page.dart';
 import 'pages/settings_page.dart';
+import 'pages/stress_test_page/stress_test/debt.dart';
+import 'pages/stress_test_page/stress_test/expenses.dart';
+import 'pages/stress_test_page/stress_test/income.dart';
+import 'pages/stress_test_page/stress_test/savings.dart';
 import 'pages/stress_test_page/stress_test_page.dart';
+import 'pages/stress_test_page/stress_test_result.dart';
 import 'pages/structure.dart';
 import 'pages/transactions_page/transactions_page.dart';
 
@@ -73,6 +78,16 @@ Route<dynamic> makeRoute(RouteSettings settings) {
       return _materialPageRoute(settings.name, const SearchPage());
     case '/stress_test_page':
       return _materialPageRoute(settings.name, const StressTestPage());
+    case '/stress_test_one':
+      return _materialPageRoute(settings.name, const StressTestIncomePage());
+    case '/stress_test_two':
+      return _materialPageRoute(settings.name, const StressTestExpensePage());
+    case '/stress_test_three':
+      return _materialPageRoute(settings.name, const StressTestDebtPage());
+    case '/stress_test_four':
+      return _materialPageRoute(settings.name, const StressTestSavingsPage());
+    case '/stress_test_result':
+      return _materialPageRoute(settings.name, const StressTestResult());
     default:
       throw 'Route is not defined';
   }

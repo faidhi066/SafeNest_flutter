@@ -26,9 +26,11 @@ class _StressTestPageState extends State<StressTestPage> {
   ];
 
   void toggleSelection(int index) {
-    setState(() {
-      scenarios[index]['selected'] = !scenarios[index]['selected'];
-    });
+    if (mounted) {
+      setState(() {
+        scenarios[index]['selected'] = !scenarios[index]['selected'];
+      });
+    }
   }
 
   void showMoreInformation() {
@@ -38,77 +40,25 @@ class _StressTestPageState extends State<StressTestPage> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (BuildContext context) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
+        return const Padding(
+          padding: EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "More Information",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 13),
-              const Text(
+              SizedBox(height: 13),
+              Text(
                 "Based on your selected scenarios, key areas that may be impacted include your income stability, increased debt repayment costs, reduced savings capacity, and higher day-to-day expenses.",
                 style: TextStyle(fontSize: 14, color: Colors.black54),
               ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        final selectedScenarios = scenarios
-                            .where((scenario) => scenario['selected'])
-                            .map((e) => e['name'])
-                            .toList();
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: const Text("Selected Scenarios"),
-                            content: Text(selectedScenarios.isEmpty
-                                ? "No scenarios selected."
-                                : selectedScenarios.join(", ")),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text("OK"),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      child: const Text("Next - Personalize Details"),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        final selectedCount =
-                            scenarios.where((e) => e['selected']).length;
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                            selectedCount > 0
-                                ? "Stress Test Running for $selectedCount Scenarios"
-                                : "Please select at least one scenario.",
-                          ),
-                        ));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey.shade300,
-                        foregroundColor: Colors.black54,
-                      ),
-                      child: const Text("Run Stress Test"),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
+              SizedBox(height: 15),
             ],
           ),
         );
@@ -168,10 +118,67 @@ class _StressTestPageState extends State<StressTestPage> {
                 },
               ),
             ),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final selectedScenarios = scenarios
+                          .where((scenario) => scenario['selected'])
+                          .map((e) => e['name'])
+                          .toList();
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (context) => AlertDialog(
+                      //     title: const Text("Selected Scenarios"),
+                      //     content: Text(selectedScenarios.isEmpty
+                      //         ? "No scenarios selected."
+                      //         : selectedScenarios.join(", ")),
+                      //     actions: [
+                      //       TextButton(
+                      //         onPressed: () => Navigator.pop(context),
+                      //         child: const Text("OK"),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // );
+                      Navigator.of(context).pushNamed("/stress_test_one");
+                    },
+                    child: const Text("Next - Personalize Details"),
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final selectedCount =
+                          scenarios.where((e) => e['selected']).length;
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                          selectedCount > 0
+                              ? "Stress Test Running for $selectedCount Scenarios"
+                              : "Please select at least one scenario.",
+                        ),
+                      ));
+                      if (selectedCount > 0) {
+                        Navigator.of(context).pushNamed("/stress_test_result");
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey.shade300,
+                      foregroundColor: Colors.black54,
+                    ),
+                    child: const Text("Run Stress Test"),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        mini: true,
         onPressed: showMoreInformation,
         child: const Icon(Icons.info),
       ),

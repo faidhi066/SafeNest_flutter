@@ -59,8 +59,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               : Colors.green,
                       child: Icon(
                         transaction['credit_debit_indicator'] == "DEBIT"
-                            ? Icons.arrow_downward
-                            : Icons.arrow_upward,
+                            ? Icons.arrow_upward
+                            : Icons.arrow_downward,
                         color: Colors.white,
                       ),
                     ),

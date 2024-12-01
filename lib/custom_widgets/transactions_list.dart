@@ -6,6 +6,7 @@ import '../constants/functions.dart';
 import '../constants/style.dart';
 import '../models/transaction.dart';
 import '../pages/trends_page/widget/bar_graph.dart';
+import '../pages/trends_page/widget/insights_trends_carousel.dart';
 import '../providers/currency_provider.dart';
 import '../providers/transactions_provider.dart';
 import '../utils/date_helper.dart';
@@ -92,16 +93,36 @@ class _TransactionsListState extends State<TransactionsList> with Functions {
               ),
             ),
           )
-        :
-        // Container(
-        //     padding: const EdgeInsets.all(16),
-        //     margin: const EdgeInsets.all(16),
-        //     width: double.infinity,
-        //     child: const Center(
-        //       child: Text("No transactions available"),
-        //     ),
-        //   );
-        const BarChartWidget();
+        : Container(
+            padding: const EdgeInsets.all(6),
+            margin: const EdgeInsets.all(6),
+            width: double.infinity,
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start, // Align to start
+              children: [
+                // First child: Title
+                // Space before the chart
+
+                // Third child: Bar Chart
+                Center(
+                  child: BarChartWidget(),
+                ),
+
+                SizedBox(height: 16), // Space after the chart
+                Text(
+                  "Insights",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                // Fourth child: Footer or additional information
+                Center(
+                  child: InsightTrendCarousel(),
+                )
+              ],
+            ),
+          );
   }
 }
 

@@ -10,13 +10,31 @@ class InsightCardCarousel extends StatefulWidget {
 class _InsightCardCarouselState extends State<InsightCardCarousel> {
   final PageController _pageController = PageController(viewportFraction: 0.8);
 
+  final List<String> titles = [
+    "Utility Bill Insights",
+    "Smart Spending",
+    "Portfolio Insights"
+  ];
+
+  final List<String> messages = [
+    "Your utility bill was RM120 this month, a 15% increase from last month.",
+    "Explore budget-friendly supermarkets near Taman Melati, KL and set spending limits for online shopping.",
+    "Your portfolio is heavily concentrated in Malaysian equities."
+  ];
+
+  final List<IconData> icons = [
+    Icons.lightbulb, // For "Utility Bill Insights"
+    Icons.shopping_cart, // For "Smart Spending"
+    Icons.pie_chart // For "Portfolio Insights"
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 160, // Adjust height based on your design
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 10, // Number of cards
+        itemCount: titles.length, // Number of cards
         itemBuilder: (context, index) {
           return Card(
             color: Colors.blue[50], // Light blue background
@@ -37,9 +55,8 @@ class _InsightCardCarouselState extends State<InsightCardCarousel> {
                       color: Colors.yellow[100],
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(
-                      Icons
-                          .mail, // Replace with a custom image using Image.asset if needed
+                    child: Icon(
+                      icons[index], // Use the icon for the current card
                       color: Colors.orange,
                       size: 32,
                     ),
@@ -47,41 +64,32 @@ class _InsightCardCarouselState extends State<InsightCardCarousel> {
                   const SizedBox(width: 12), // Spacing between icon and text
                   // Text Content
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "TODAY",
-                          style: TextStyle(
-                            color: Colors.blue[700],
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
+                    child: GestureDetector(
+                      onTap: () {
+                        // Handle onTap actions here
+                        print("Card ${index + 1} tapped!");
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            titles[index],
+                            style: TextStyle(
+                              color: Colors.blue[700],
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          "Financial Insights",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                          const SizedBox(height: 8),
+                          Text(
+                            messages[index],
+                            style: const TextStyle(
+                              color: Colors.black87,
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        RichText(
-                          text: const TextSpan(
-                            children: [
-                              TextSpan(
-                                text:
-                                    "Your utility bill was \$120 this month, a 15% increase from last month.",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12), // Smaller text
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   // Arrow Icon
